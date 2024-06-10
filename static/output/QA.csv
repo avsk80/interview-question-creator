@@ -1,0 +1,56 @@
+Question,Answer
+1. Who developed Linux in 1991 and what was it inspired by?,"Linux was developed in 1991 by Linus Torvalds, and it was inspired by Unix."
+2. What are some examples of Debian derivatives in the Linux operating system?,"Some examples of Debian derivatives in the Linux operating system are Ubuntu, Debian itself, and Linux Mint."
+3. Why is it important to learn Linux/Unix commands in relation to the Hadoop ecosystem?,"It is important to learn Linux/Unix commands in relation to the Hadoop ecosystem because Hadoop is native to Unix/Linux environments. The Hadoop file system emulates Unix and uses similar commands. Additionally, cloud computing facilities, such as Amazon Cloud Computing, often require the use of command-line interfaces. Learning Linux/Unix commands is also essential for automation and MLOps, making data scientists more efficient and productive in handling machine learning models."
+4. What are some key characteristics of the Linux file system?,"Some key characteristics of the Linux file system are:
+1. Linux has no concept of ""file extension,"" allowing users to name files as they wish.
+2. File names are case-sensitive in Linux.
+3. Special characters allowed in file names are limited to period, dash, and underscore.
+4. The organization of files includes the root directory ""/"", the configuration files in ""/etc,"" and user-specific files in ""/home."""
+5. What is the purpose of a shell in Linux?,"The purpose of a shell in Linux is to provide an interactive command interpreter environment where users can input commands from the keyboard and have them executed by the operating system. The shell is more powerful than a Windows ""command"" and allows users to interact with the system efficiently through command line interfaces (CLIs)."
+6. How can you navigate directories in Linux using absolute and relative paths?,"To navigate directories in Linux using absolute paths, you start from the root directory indicated by ""/"", followed by the subsequent directories you want to access. For example, to navigate to the directory ""/vagrant"", you would use the command ""cd /vagrant"".
+
+Using relative paths in Linux means navigating based on the current directory. You do not start with ""/"", and the path is relative to your current location. For instance, if you are in the directory ""training_materials"" and want to move to a directory inside it called ""downloads"", you would use the command ""cd downloads"".
+
+Remember, absolute paths start with ""/"", while relative paths do not start with ""/""."
+7. What are some essential file operations that can be performed using shell commands?,"Some essential file operations that can be performed using shell commands include:
+
+- Copying files and directories using commands like `cp` and `cp -i`
+- Moving or renaming files and directories using the `mv` command
+- Removing files and directories using the `rm` command (be careful as there is no ""undelete"" option)
+- Finding files using the `find` command
+- Creating and removing directories using the `mkdir` command
+- Using wildcards for operations like listing specific types of files or removing files based on patterns
+
+These are some of the basic file operations that can be performed using shell commands."
+"8. How can you view large text files in Linux using the ""less"" command?","To view large text files in Linux using the ""less"" command, you can follow these steps:
+
+1. Open the terminal.
+2. Type `less filename.txt` and press Enter.
+3. This will display the content of the text file interactively.
+4. To scroll back or forward one page, you can use the following keys:
+   - Page up: b
+   - Page down: space
+5. To search for specific characters within the file, you can type `/characters` and press Enter.
+6. To search again for the same characters, press `n`.
+7. To quit viewing the file, press `q`.
+
+Using the ""less"" command allows you to view large text files in a more manageable way by scrolling through the content interactively."
+"9. How can you manipulate text files using commands like wc, sort, and sed in Linux?","To manipulate text files using commands like wc, sort, and sed in Linux, you can follow these steps:
+
+1. **wc Command**: Use `wc` to print newline, word, and byte counts. To print just the line count, you can use `wc -l`.
+
+2. **sort Command**: Use `sort` to sort lines of text files. You can perform different types of sorting such as dictionary sort, numeric sort with `-n`, and removing duplicate lines with `-u`.
+
+3. **sed Command**: Use `sed` for ""streaming editing"" to manipulate text files line by line. For example, you can search for a specific pattern and replace it with another using a command like `sed ""s/MSBA/MS in Business Analytics/"" /path/to/file`.
+
+By combining these commands with appropriate options and file paths, you can effectively manipulate text files in Linux."
+"10. What are some text editors that can be used to edit text files in Linux, and what are their differences?","In Linux, some text editors that can be used to edit text files are:
+
+1. **gedit**: This is a GUI-based text editor that is user-friendly and allows for easy editing of text files. It provides a graphical interface for editing text files.
+
+2. **vi (vim)**: This is a powerful text-based editor with a steep learning curve. It is highly customizable and efficient for experienced users who prefer working in the terminal.
+
+3. **nano**: Another text-based editor that is simpler and more user-friendly compared to vi. It is easier to use for beginners and provides basic text editing functionalities.
+
+Each of these text editors has its own strengths and weaknesses, and the choice of which one to use often depends on personal preference and the level of expertise of the user."
