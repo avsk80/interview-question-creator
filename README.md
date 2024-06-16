@@ -61,11 +61,13 @@ Ans: I have used a refine chain strategy to get LLM-generated questions. I use 2
 2. What is the essence of this whole project from technical and business standpoints? <br>
 Ans: <br>
 Business view: <br>
-This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <be>
+This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <br>
+
 Tech view: <br>
 I followed a typical RAG architecture in this project.<br>
 Case A: If a list of questions is uploaded from the UI in a text file. Then, use the pdf as context and generate answers from the LLM. <br>
 Case B: If no text file is uploaded, then generate both questions and answers from the pdf. <br>
+
 For questions: <br>
 Storage:<br>
 a) First, I get the pdf as context and create document chunks. <br>
@@ -73,11 +75,10 @@ b) Next, I numericalize them using embeddings (OpenAI in my case). <br>
 c) Finally, I store the embeddings in a vector DB (Chroma in my case). <br>
 
 Retrival and Generation:<br>
-a) Given a prompt and context, we extract relevant documents from the vector DB and feed it to the LLM in refine fashion to generate a list of questions.
- query (question) <br>
+Given a prompt and context, we extract relevant documents from the vector DB and feed it to the LLM in refine fashion to generate a list of questions.  <br>
 
 For answers: <br>
-b) Pass the context to the LLM in the same fashion as above and generate LLM-driven answer explanations. <br>
+a) Pass the context to the LLM in the same fashion as above and generate LLM-driven answer explanations. <br>
 
 3. What parameters can be changed in this App to suit specific user needs? <br>
 Ans: <br>
