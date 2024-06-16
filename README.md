@@ -61,7 +61,7 @@ Ans: I have used a refine chain strategy to get LLM-generated questions. I use 2
 2. What is the essence of this whole project from technical and business standpoints? <br>
 Ans: <br>
 Business view: <br>
-This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <br>
+This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload (almost by 15% every week) and also help them set more creative and trick questions. <br>
 
 Tech view: <br>
 I followed a typical RAG architecture in this project.<br>
