@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request, Response, File, Depends, HTTPException, status
+from fastapi import FastAPI, Form, Request, Response, File, Depends, HTTPException, status, UploadFile
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -8,7 +8,7 @@ import os
 import aiofiles
 import json
 import csv
-from src.helper import llm_pipeline
+from src.helper2 import llm_pipeline
 
 
 app = FastAPI()
@@ -16,60 +16,69 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
-
-
 @app.get("/")
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-
 @app.post("/upload")
-async def chat(request: Request, pdf_file: bytes = File(), filename: str = Form(...)):
+async def upload_files(request: Request, pdf_file: UploadFile = File(...), csv_file: UploadFile = File(None)):
     base_folder = 'static/docs/'
     if not os.path.isdir(base_folder):
         os.mkdir(base_folder)
-    pdf_filename = os.path.join(base_folder, filename)
-
+    
+    # Save PDF file
+    pdf_filename = os.path.join(base_folder, pdf_file.filename)
     async with aiofiles.open(pdf_filename, 'wb') as f:
-        await f.write(pdf_file)
- 
-    response_data = jsonable_encoder(json.dumps({"msg": 'success',"pdf_filename": pdf_filename}))
-    res = Response(response_data)
+        await f.write(await pdf_file.read())
+    print("Saved PDF!!!!!!!!!!!!!!")
+    csv_filename = None
+    if csv_file:
+        # Save CSV file if it exists
+        csv_filename = os.path.join(base_folder, csv_file.filename)
+        async with aiofiles.open(csv_filename, 'wb') as f:
+            await f.write(await csv_file.read())
+
+    response_data = {"msg": "success", "pdf_filename": pdf_filename}
+    if csv_filename:
+        response_data["csv_filename"] = csv_filename
+    
+    res = Response(content=json.dumps(response_data), media_type="application/json")
     return res
 
 
+def generate_ans_from_csv(pdf_filename, csv_filename=None):
 
-
-def get_csv(file_path):
-    answer_generation_chain, ques_list = llm_pipeline(file_path)
+    answer_generation_chain, ques_list = llm_pipeline(file_path= pdf_filename, txt= csv_filename)
+    print(ques_list)
     base_folder = 'static/output/'
     if not os.path.isdir(base_folder):
         os.mkdir(base_folder)
-    output_file = base_folder+"QA.csv"
+    output_file = os.path.join(base_folder, "QA.csv")
     with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question", "Answer"])  # Writing the header row
+        csv_writer.writerow(["Question", "Answer", "Referred_page_nums"])  # Writing the header row
 
         for question in ques_list:
             print("Question: ", question)
-            answer = answer_generation_chain.run(question)
-            print("Answer: ", answer)
+            answer = answer_generation_chain(question)
+            print("Answer: ", answer['result'])
+            page_no = [ doc.metadata['page'] for doc in answer['source_documents']]
+            print("Page num: ", str(page_no))
             print("--------------------------------------------------\n\n")
 
             # Save answer to CSV file
-            csv_writer.writerow([question, answer])
+            csv_writer.writerow([question, answer['result'], page_no])
     return output_file
 
-
-
 @app.post("/analyze")
-async def chat(request: Request, pdf_filename: str = Form(...)):
-    output_file = get_csv(pdf_filename)
+async def analyze_files(pdf_filename: str = Form(...), csv_filename: str = Form(None)):
+    print(f"Analyzing PDF file: {pdf_filename}")
+    output_file = generate_ans_from_csv(pdf_filename, csv_filename)
+    
     response_data = jsonable_encoder(json.dumps({"output_file": output_file}))
-    res = Response(response_data)
+    res = Response(content=response_data, media_type="application/json")
     return res
-
 
 
 if __name__ == "__main__":

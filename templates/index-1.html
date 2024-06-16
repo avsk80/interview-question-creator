@@ -25,6 +25,7 @@
                     <h3>Quiz Question Answer Creator</h3>
                 </div>
             </div>
+
         </div>
     </section>
     <section class="mb-4">
@@ -33,17 +34,14 @@
                 <div class="cl-sm-12">
                     <div class="card p-5 shadow border-0 m-3">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Upload your PDF or CSV file here</label>
+                            <label for="exampleFormControlInput1" class="form-label">Upload your PDF file here</label>
                             <div class="input-group mb-3">
-                                <select class="form-select" id="upload-type">
-                                    <option value="pdf">PDF for Q&A</option>
-                                    <option value="csv">CSV for Answers</option>
-                                </select>
-                                <input type="file" class="form-control" id="file-upload">
+                                <input type="file" class="form-control" id="pdf-file">
+                                <!-- <label class="input-group-text" for="pdf-file">Max No. of Pages is 5</label> -->
                             </div>
-                        </div>
-                        <div class="mb-3 text-end">
-                            <button type="button" id="upload-btn" class="btn btn-md btn-success">Generate</button>
+                          </div>
+                          <div class="mb-3 text-end">
+                            <button type="button" id="upload-btn" class="btn btn-md btn-success">Generate Q&A</button>
                         </div>
                     </div>
                 </div>
@@ -88,31 +86,26 @@
             $("#upload-btn").click(async function (event) {
                 event.preventDefault();
                 const formData = new FormData();
-                const fileInput = document.getElementById('file-upload');
-                const uploadType = document.getElementById('upload-type').value;
-                var file = fileInput.files[0];
+                const fileInput = document.getElementById('pdf-file') ;  
+                var file = fileInput.files[0];           
                 
-                formData.append('file', file);
+                formData.append('pdf_file', file);
                 formData.append('filename', file.name)
-                formData.append('upload_type', uploadType);
-
-                let endpoint = uploadType === 'pdf' ? '/upload_pdf' : '/upload_csv';
-                
-                let response = await fetch(endpoint, {
+                let response = await fetch('/upload', {
                     method: "POST",
                     body: formData                
                 });                
-                processUploadResponse(response, uploadType);  
+                processUploadResponse(response);  
             });
         });
 
-        async function processUploadResponse(response, uploadType){
+        async function processUploadResponse(response){
             switch (response.status) {
                 case 400:  
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops!!!',
-                        text: "Sorry, Couldn't be able to upload your file!!!",
+                        text: "Sorry, Couldn't be able to upload your pdf!!!",
                         confirmButtonColor: "#15011d"
                     }).then(function() {
                         window.location.reload();
@@ -133,18 +126,14 @@
                         result.style.display = "block";
                         loader.style.display = "block";
                         download.style.display = "none";
-                        viewPdf.setAttribute('src', "../"+json.file_url)
+                        viewPdf.setAttribute('src', "../"+json.pdf_filename)
                         viewPdf.setAttribute('preload', 'auto');
-                        
                         const formData = new FormData();
-                        formData.append('file_url', json.file_url)
-
-                        let analyzeEndpoint = uploadType === 'pdf' ? '/analyze_pdf' : '/analyze_csv';
-
-                        fetch(analyzeEndpoint, {
+                        formData.append('pdf_filename', json.pdf_filename)
+                        fetch('/analyze', {
                             method: "POST",
                             body: formData                
-                        }).then(response => processAnalyzeResponse(response, uploadType));
+                        }).then(processAnalyzeResponse)  
                     }
                     
                     break;
@@ -160,13 +149,13 @@
             }
         }
 
-        async function processAnalyzeResponse(response, uploadType){            
+        async function processAnalyzeResponse(response){            
             switch (response.status) {
                 case 400:  
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops!!!',
-                        text: "Sorry, Couldn't be able to analyze your file!!!",
+                        text: "Sorry, Couldn't be able to analyze your pdf!!!",
                         confirmButtonColor: "#15011d"
                     }).then(function() {
                         window.location.reload();
@@ -189,6 +178,8 @@
                     });
             }
         }
+
+        
     </script>
 </body>
 </html>

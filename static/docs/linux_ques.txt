@@ -1,0 +1,33 @@
+1. In Linux, the interactive Command Line Interface (CLI) that takes commands from keyboard, interpret it, run it, and display the results is called a (an)
+A) Shell
+B) Explorer
+C) Command Prompt
+
+2. In the command `du -h data`, which part indicates the command's target directory?
+A) du
+B) -h
+C) data
+
+3. Suppose your current directory is your home directory, and you want to list the content of a "data" directory in the vagrant directory (which is under the root). Which of the following is the right way?
+A) ls /vagrant/data 
+B) ls vagrant/data 
+C) ls data 
+D) ls ~/vagrant/data 
+
+4. what is the way to find all files with a ".csv" extension (i.e. the file name ends with ".csv") in your current directory?
+A) find *.csv 
+B) find "*.csv"
+C) find . -name "csv"
+D) find . -name "*.csv"
+
+5. Which of the following Linux command is used for returning lines based on matching patterns?
+A) less
+B) grep
+C) sed
+D) find
+
+6. Which of the following symbols serves the purpose of taking the output of command 1 and using it as input for command 2?
+A) command 1 > command 2
+B) command 1 < command 2
+C) command 1 & command 2
+D) command 1 | command 2 

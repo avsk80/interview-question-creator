@@ -98,4 +98,4 @@ def llm_pipeline(file_path):
     return answer_gen_chain, filtered_ques_list
 
 
-llm_pipeline(file_path="/home/learning/gen_ai/one_neuron/interview-question-creator/data/SDG.pdf")
+# llm_pipeline(file_path="/home/learning/gen_ai/one_neuron/interview-question-creator/data/SDG.pdf")
