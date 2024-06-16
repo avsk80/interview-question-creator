@@ -21,4 +21,24 @@
 
 2. conda activate interview
 
+3. pip install -r requirements.txt
+
 ```
+
+#### Technologies used:
+**Frontend**: HTML, CSS, JS <br>
+**Backend**: FastAPI <br>
+**ML stack**: Langchain, Python, Jupyter Notebook <br>
+
+#### Procedure to run the code base:
+
+```bash
+Python app.py
+```
+
+#### To test functions locally use the script: 
+``` bash
+test/test-unit.py
+```
+
+[]
