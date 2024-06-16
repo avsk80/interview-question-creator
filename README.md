@@ -61,13 +61,11 @@ Ans: I have used a refine chain strategy to get LLM-generated questions. I use 2
 2. What is the essence of this whole project from technical and business standpoints? <br>
 Ans: <br>
 Business view: <br>
-This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <br>
-
+This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <be>
 Tech view: <br>
 I followed a typical RAG architecture in this project.<br>
 Case A: If a list of questions is uploaded from the UI in a text file. Then, use the pdf as context and generate answers from the LLM. <br>
 Case B: If no text file is uploaded, then generate both questions and answers from the pdf. <br>
-
 For questions: <br>
 Storage:<br>
 a) First, I get the pdf as context and create document chunks. <br>
