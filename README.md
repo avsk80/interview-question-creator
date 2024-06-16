@@ -63,16 +63,12 @@ Ans: <br>
 Business view: <br>
 This App can help professors, and TAs generate quiz questions and answers to test students. This can significantly reduce their workload and also help them set more creative and trick questions. <br>
 
-
 Tech view: <br>
 I followed a typical RAG architecture in this project.<br>
-
 Case A: If a list of questions is uploaded from the UI in a text file. Then, use the pdf as context and generate answers from the LLM. <br>
-
 Case B: If no text file is uploaded, then generate both questions and answers from the pdf. <br>
 
-For questions:
-
+For questions: <br>
 Storage:<br>
 a) First, I get the pdf as context and create document chunks. <br>
 b) Next, I numericalize them using embeddings (OpenAI in my case). <br>
